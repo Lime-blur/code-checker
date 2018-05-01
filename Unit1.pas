@@ -50,6 +50,30 @@ uses Unit2;
 
 {$R *.dfm}
 
+const
+  c: array[0..63] of byte=($7A, $FD, $24, $34, $12, $6B, $1E, $F0, $4C, $13, $EC, $CC, $63, $5A, $59, $E3, $13, $87, $A7, $62, $B8, $96, $84, $3C, $4A, $5D, $B0, $E6, $86, $78, $9A, $3C, $C9, $C6, $BD, $E3, $6A, $6B, $91, $C7, $AB, $94, $4D, $94, $76, $76, $E3, $3D, $88, $4B, $DA, $FF, $CD, $48, $F9, $60, $F4, $BB, $EB, $28, $93, $E1, $53, $4E);
+
+function IncryptStr(s: string): string;
+var
+  n: integer;
+begin
+  for n := 1 to Length(s) do
+    s[n] := char(Ord(s[n]) XOR c[n MOD SizeOf(c)]);
+  IncryptStr := s;
+end;
+
+procedure DecryptStr(var Pw; Leng: integer);
+var
+  n: integer;
+  P: ^byte;
+begin
+  P := @Pw;
+  for n:=0 to Leng-1 do begin
+    P^ := P^ XOR c[n MOD SizeOf(c)];
+    inc(P);
+  end;
+end;
+
 procedure TForm1.Button4Click(Sender: TObject);
 begin
  Close;
@@ -168,7 +192,8 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   if not DirectoryExists('C:\CChecker') then
     CreateDirectory('C:\CCchecker', 0);
-    Timer1.Enabled := true;
+  Timer1.Enabled := true;
+  MessageDlg(IncryptStr('Проверка шифрования.'), mtWarning, [mbOk], 0);
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);

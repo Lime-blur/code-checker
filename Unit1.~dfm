@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 176
-  Top = 135
+  Left = 189
+  Top = 112
   BorderStyle = bsDialog
   Caption = 'Code checker'
   ClientHeight = 447

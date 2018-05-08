@@ -44,6 +44,10 @@ type
 var
   Form1: TForm1;
 
+function returnMetaAttribute(attributeType: Real; returnString: String) : String; stdcall; external 'CCML.dll';
+function returnFileSize(inputSize: Real) : String; stdcall; external 'CCML.dll';
+function returnFileVersion(FileName: string) : string; stdcall; external 'CCML.dll';
+
 implementation
 
 uses Unit2;
@@ -51,7 +55,9 @@ uses Unit2;
 {$R *.dfm}
 
 const
-  c: array[0..63] of byte=($7A, $FD, $24, $34, $12, $6B, $1E, $F0, $4C, $13, $EC, $CC, $63, $5A, $59, $E3, $13, $87, $A7, $62, $B8, $96, $84, $3C, $4A, $5D, $B0, $E6, $86, $78, $9A, $3C, $C9, $C6, $BD, $E3, $6A, $6B, $91, $C7, $AB, $94, $4D, $94, $76, $76, $E3, $3D, $88, $4B, $DA, $FF, $CD, $48, $F9, $60, $F4, $BB, $EB, $28, $93, $E1, $53, $4E);
+  c: array[0..63] of byte = ($7A, $FD, $24, $34, $12, $6B, $1E, $F0, $4C, $13, $EC, $CC, $63, $5A, $59, $E3, $13, $87, $A7, $62, $B8, $96, $84, $3C, $4A, $5D, $B0, $E6, $86, $78, $9A, $3C, $C9, $C6, $BD, $E3, $6A, $6B, $91, $C7, $AB, $94, $4D, $94, $76, $76, $E3, $3D, $88, $4B, $DA, $FF, $CD, $48, $F9, $60, $F4, $BB, $EB, $28, $93, $E1, $53, $4E);
+
+{ Utilities }
 
 function IncryptStr(s: string): string;
 var
@@ -73,6 +79,8 @@ begin
     inc(P);
   end;
 end;
+
+{ Core }
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
@@ -193,7 +201,7 @@ begin
   if not DirectoryExists('C:\CChecker') then
     CreateDirectory('C:\CCchecker', 0);
   Timer1.Enabled := true;
-  MessageDlg(IncryptStr('Вы не можете общаться с самим собой!'), mtWarning, [mbOk], 0);
+  MessageDlg(IncryptStr('Проверка шифрования.'), mtWarning, [mbOk], 0);
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);

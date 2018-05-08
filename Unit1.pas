@@ -44,35 +44,15 @@ type
 var
   Form1: TForm1;
 
+function incryptStr(s: string): string; stdcall; external 'CCML.dll';
+function decryptStr(var Pw; Leng: integer); stdcall; external 'CCML.dll';
+function convertFileSize(inputSize: Real) : String; stdcall; external 'CCML.dll';
+
 implementation
 
 uses Unit2;
 
 {$R *.dfm}
-
-const
-  c: array[0..63] of byte=($7A, $FD, $24, $34, $12, $6B, $1E, $F0, $4C, $13, $EC, $CC, $63, $5A, $59, $E3, $13, $87, $A7, $62, $B8, $96, $84, $3C, $4A, $5D, $B0, $E6, $86, $78, $9A, $3C, $C9, $C6, $BD, $E3, $6A, $6B, $91, $C7, $AB, $94, $4D, $94, $76, $76, $E3, $3D, $88, $4B, $DA, $FF, $CD, $48, $F9, $60, $F4, $BB, $EB, $28, $93, $E1, $53, $4E);
-
-function IncryptStr(s: string): string;
-var
-  n: integer;
-begin
-  for n := 1 to Length(s) do
-    s[n] := char(Ord(s[n]) XOR c[n MOD SizeOf(c)]);
-  IncryptStr := s;
-end;
-
-procedure DecryptStr(var Pw; Leng: integer);
-var
-  n: integer;
-  P: ^byte;
-begin
-  P := @Pw;
-  for n:=0 to Leng-1 do begin
-    P^ := P^ XOR c[n MOD SizeOf(c)];
-    inc(P);
-  end;
-end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
@@ -116,7 +96,7 @@ begin
     Button1.Enabled := false;
     Button2.Enabled := false;
     Button3.Enabled := true;
-    Button5.Enabled := true;
+    Button5.Enabled := true;    // Fix to formCreate
     if not FileExists('C:\CCchecker\Users.dat') then begin
       fs := TFileStream.Create('C:\CCchecker\Users.dat', fmCreate);
       try

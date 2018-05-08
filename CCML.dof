@@ -115,7 +115,7 @@ AutoIncBuild=0
 MajorVer=0
 MinorVer=0
 Release=0
-Build=1
+Build=2
 Debug=0
 PreRelease=1
 Special=0
@@ -126,7 +126,7 @@ CodePage=1251
 [Version Info Keys]
 CompanyName=Lime's projects dev.
 FileDescription=CChecker Main Lib
-FileVersion=0.0.0.1
+FileVersion=0.0.0.2
 InternalName=CCML
 LegalCopyright=
 LegalTrademarks=
@@ -137,6 +137,3 @@ Comments=
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
-[HistoryLists\hlSearchPath]
-Count=1
-Item0=C:\Program Files\Borland\Delphi7\Source\SynEdit\Source

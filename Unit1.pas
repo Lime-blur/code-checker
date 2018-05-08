@@ -7,6 +7,7 @@ uses
   Dialogs, jpeg, ExtCtrls, StdCtrls, Mask, XPMan, Grids, ValEdit, ComCtrls;
 
 type
+  TWordTriple = Array[0..2] of Word;
   TForm1 = class(TForm)
     Image1: TImage;
     Shape1: TShape;
@@ -44,15 +45,51 @@ type
 var
   Form1: TForm1;
 
-function incryptStr(s: string): string; stdcall; external 'CCML.dll';
-function decryptStr(var Pw; Leng: integer); stdcall; external 'CCML.dll';
-function convertFileSize(inputSize: Real) : String; stdcall; external 'CCML.dll';
+function FileEncrypt(InFile, OutFile: String; Key: TWordTriple): boolean; stdcall; external 'CCML.dll';
+function FileDecrypt(InFile, OutFile: String; Key: TWordTriple): boolean; stdcall; external 'CCML.dll';
+function TextEncrypt(const s: string; Key: TWordTriple): string; stdcall; external 'CCML.dll';
+function TextDecrypt(const s: string; Key: TWordTriple): string; stdcall; external 'CCML.dll';
+function MemoryEncrypt(Src: Pointer; SrcSize: Cardinal; Target: Pointer; TargetSize: Cardinal; Key: TWordTriple): boolean; stdcall; external 'CCML.dll';
+function MemoryDecrypt(Src: Pointer; SrcSize: Cardinal; Target: Pointer; TargetSize: Cardinal; Key: TWordTriple): boolean; stdcall; external 'CCML.dll';
+function ConvertFileSize(inputSize: Real) : String; stdcall; external 'CCML.dll';
 
 implementation
 
 uses Unit2;
 
 {$R *.dfm}
+
+procedure updateUsersFile(userNameString: string);
+var
+  List: TStringList;
+  i: integer;
+begin
+  if FileExists('C:\CCchecker\Users.dat') then begin
+    List := TStringList.Create;
+    List.LoadFromFile('C:\CCchecker\Users.dat');
+    for i := List.Count-1 downto 0 do begin
+      if Pos(userNameString, List.Strings[i]) <> 0 then List.Delete(i);
+    end;
+    List.SaveToFile('C:\CCchecker\Users.dat');
+    List.Free;
+  end;
+end;
+
+procedure createEmptyFile(filePath: string);
+var
+  fs: TFileStream;
+  s: AnsiString;
+begin
+  if not FileExists(filePath) then begin
+    fs := TFileStream.Create(filePath, fmCreate);
+    try
+      s := '';
+      fs.WriteBuffer(s[1], Length(s));
+    finally
+      fs.Free;
+    end;
+  end;
+end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
@@ -61,25 +98,19 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-  fs: TFileStream;
-  s: AnsiString;
+  Key: TWordTriple;
 begin
+  Key[0] := 165;
+  Key[1] := 103;
+  Key[2] := 785;
   if (Edit1.Text <> '') and (Edit2.Text <> '') then begin
     Button1.Enabled := false;
     Button2.Enabled := false;
     Button3.Enabled := true;
     Button5.Enabled := true;
-    if not FileExists('C:\CCchecker\Users.dat') then begin
-      fs := TFileStream.Create('C:\CCchecker\Users.dat', fmCreate);
-      try
-        s := '';
-        fs.WriteBuffer(s[1], Length(s));
-      finally
-        fs.Free;
-      end;
-    end;
+    createEmptyFile('C:\CCchecker\Users.dat');
     ListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
-    ListBox1.Items.Add(Edit1.Text);
+    ListBox1.Items.Add(TextEncrypt(Edit1.Text, Key));
     ListBox1.Items.SaveToFile('C:\CCchecker\Users.dat');
     Label5.Caption := 'Вы вошли как: '+Edit1.Text;
     Edit1.Enabled := false;
@@ -88,24 +119,13 @@ begin
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
-var
-  fs: TFileStream;
-  s: AnsiString;
 begin
   if (Edit1.Text <> '') and (Edit2.Text <> '') then begin
     Button1.Enabled := false;
     Button2.Enabled := false;
     Button3.Enabled := true;
-    Button5.Enabled := true;    // Fix to formCreate
-    if not FileExists('C:\CCchecker\Users.dat') then begin
-      fs := TFileStream.Create('C:\CCchecker\Users.dat', fmCreate);
-      try
-        s := '';
-        fs.WriteBuffer(s[1], Length(s));
-      finally
-        fs.Free;
-      end;
-    end;
+    Button5.Enabled := true;
+    createEmptyFile('C:\CCchecker\Users.dat');
     ListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
     ListBox1.Items.Add(Edit1.Text);
     ListBox1.Items.SaveToFile('C:\CCchecker\Users.dat');
@@ -116,26 +136,13 @@ begin
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
-var
-  List: TStringList;
-  i: integer;
 begin
     Button1.Enabled := true;
     Button2.Enabled := true;
     Button3.Enabled := false;
     Button5.Enabled := false;
     Label5.Caption := 'Вы не вошли в аккаунт';
-    try
-      List := TStringList.Create;
-      List.LoadFromFile('C:\CCchecker\Users.dat');
-    except
-      MessageDlg('Ошибка файла!', mtError, [mbOk], 0);
-    end;
-    for i := List.Count-1 downto 0 do begin
-      if Pos(Edit1.Text, List.Strings[i]) <> 0 then List.Delete(i);
-    end;
-    List.SaveToFile('C:\CCchecker\Users.dat');
-    List.Free;
+    updateUsersFile(Edit1.Text);
     Edit1.Text := '';
     Edit2.Text := '';
     Edit1.Enabled := true;
@@ -144,24 +151,13 @@ begin
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
-var
-  fs: TFileStream;
-  s: AnsiString;
 begin
   if (ListBox1.ItemIndex >= 0) then begin
     if (ListBox1.Items[ListBox1.ItemIndex] <> Edit1.Text) then begin
       Form2.Caption := 'Чат - '+ListBox1.Items[ListBox1.ItemIndex];
       Form2.Show;
       Timer1.Enabled := false;
-      if not FileExists('C:\CCchecker\'+ListBox1.Items[ListBox1.ItemIndex]+'_sended.dat') then begin
-        fs := TFileStream.Create('C:\CCchecker\'+ListBox1.Items[ListBox1.ItemIndex]+'_sended.dat', fmCreate);
-        try
-          s := '';
-          fs.WriteBuffer(s[1], Length(s));
-        finally
-          fs.Free;
-        end;
-      end;
+      createEmptyFile('C:\CCchecker\'+ListBox1.Items[ListBox1.ItemIndex]+'_sended.dat');
     end
     else
       MessageDlg('Вы не можете общаться с самим собой!', mtWarning, [mbOk], 0);
@@ -171,27 +167,13 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   if not DirectoryExists('C:\CChecker') then
-    CreateDirectory('C:\CCchecker', 0);
+    CreateDir('C:\CCchecker');
   Timer1.Enabled := true;
-  MessageDlg(IncryptStr('Проверка шифрования.'), mtWarning, [mbOk], 0);
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
-var
-  List: TStringList;
-  i: integer;
 begin
-  try
-    List := TStringList.Create;
-    List.LoadFromFile('C:\CCchecker\Users.dat');
-  except
-    MessageDlg('Ошибка файла!', mtError, [mbOk], 0);
-  end;
-  for i := List.Count-1 downto 0 do begin
-    if Pos(Edit1.Text, List.Strings[i]) <> 0 then List.Delete(i);
-  end;
-  List.SaveToFile('C:\CCchecker\Users.dat');
-  List.Free;
+  updateUsersFile(Edit1.Text);
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);

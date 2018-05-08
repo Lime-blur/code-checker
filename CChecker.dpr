@@ -1,4 +1,4 @@
-program Project1;
+program CChecker;
 
 uses
   Forms,
@@ -9,6 +9,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.Title := 'Code Checker';
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TForm2, Form2);
   Application.Run;

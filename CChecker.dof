@@ -125,13 +125,13 @@ Locale=1049
 CodePage=1251
 [Version Info Keys]
 CompanyName=Lime's projects dev.
-FileDescription=Code checker
+FileDescription=Code Checker
 FileVersion=0.0.1.1
-InternalName=cchecker.exe
+InternalName=CChecker.exe
 LegalCopyright=
 LegalTrademarks=
-OriginalFilename=cchecker.exe
-ProductName=Code checker
+OriginalFilename=CChecker.exe
+ProductName=Code Checker
 ProductVersion=1.0.0.0
 Comments=
 [HistoryLists\hlUnitAliases]

@@ -97,12 +97,7 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
-var
-  Key: TWordTriple;
 begin
-  Key[0] := 165;
-  Key[1] := 103;
-  Key[2] := 785;
   if (Edit1.Text <> '') and (Edit2.Text <> '') then begin
     Button1.Enabled := false;
     Button2.Enabled := false;
@@ -110,7 +105,7 @@ begin
     Button5.Enabled := true;
     createEmptyFile('C:\CCchecker\Users.dat');
     ListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
-    ListBox1.Items.Add(TextEncrypt(Edit1.Text, Key));
+    ListBox1.Items.Add(Edit1.Text);
     ListBox1.Items.SaveToFile('C:\CCchecker\Users.dat');
     Label5.Caption := 'Вы вошли как: '+Edit1.Text;
     Edit1.Enabled := false;

@@ -9,10 +9,6 @@ uses
 type
   TWordTriple = Array[0..2] of Word;
   TForm1 = class(TForm)
-    Image1: TImage;
-    Shape1: TShape;
-    Shape2: TShape;
-    Label1: TLabel;
     Edit1: TEdit;
     Label2: TLabel;
     Label3: TLabel;
@@ -26,8 +22,11 @@ type
     Label4: TLabel;
     Button5: TButton;
     Label5: TLabel;
-    Shape3: TShape;
     Timer1: TTimer;
+    Image1: TImage;
+    Shape1: TShape;
+    Label1: TLabel;
+    Label6: TLabel;
     procedure Button4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);

@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, jpeg, ExtCtrls, StdCtrls, Mask, XPMan, Grids, ValEdit, ComCtrls;
+  Dialogs, jpeg, ExtCtrls, StdCtrls, Mask, XPMan, Grids, ValEdit, ComCtrls,
+  Buttons, sSkinManager;
 
 type
   TWordTriple = Array[0..2] of Word;
@@ -27,6 +28,7 @@ type
     Shape1: TShape;
     Label1: TLabel;
     Label6: TLabel;
+    sSkinManager1: TsSkinManager;
     procedure Button4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);

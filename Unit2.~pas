@@ -57,8 +57,8 @@ var
   fs: TFileStream;
   s: AnsiString;
 begin
-  if not FileExists('C:\CCchecker\chat_'+userName+opponentName+'.dat') then begin
-    fs := TFileStream.Create('C:\CCchecker\chat_'+userName+opponentName+'.dat', fmCreate);
+  if not FileExists('C:\CCchecker\chat_.dat') then begin
+    fs := TFileStream.Create('C:\CCchecker\chat_.dat', fmCreate);
     try
       s := '';
       fs.WriteBuffer(s[1], Length(s));
@@ -67,9 +67,9 @@ begin
     end;
   end
   else
-    Memo1.Lines.LoadFromFile('C:\CCchecker\chat_'+userName+opponentName+'.dat');
+    Memo1.Lines.LoadFromFile('C:\CCchecker\chat_.dat');
   Memo1.Lines.Add(userName+': '+Edit1.Text);
-  Memo1.Lines.SaveToFile('C:\CCchecker\chat_'+userName+opponentName+'.dat');
+  Memo1.Lines.SaveToFile('C:\CCchecker\chat_.dat');
   Edit1.Clear;
 end;
 
@@ -124,8 +124,8 @@ begin
       fs.Free;
     end;
   end;
-  if FileExists('C:\CCchecker\chat_'+userName+opponentName+'.dat') then
-    Memo1.Lines.LoadFromFile('C:\CCchecker\chat_'+userName+opponentName+'.dat');
+  if FileExists('C:\CCchecker\chat_.dat') then
+    Memo1.Lines.LoadFromFile('C:\CCchecker\chat_.dat');
   SynMemo1.Lines.SaveToFile('C:\CCchecker\'+userName+'_sended.dat');
   SynMemo2.Lines.LoadFromFile('C:\CCchecker\'+opponentName+'_sended.dat');
 end;

@@ -1,6 +1,6 @@
 object Form2: TForm2
-  Left = 281
-  Top = 85
+  Left = 175
+  Top = 245
   Width = 1000
   Height = 600
   BorderIcons = [biSystemMenu, biMaximize]
@@ -550,7 +550,7 @@ object Form2: TForm2
   OnShow = FormShow
   DesignSize = (
     984
-    541)
+    542)
   PixelsPerInch = 96
   TextHeight = 13
   object Edit1: TEdit
@@ -723,5 +723,39 @@ object Form2: TForm2
     Filter = #1042#1089#1077' '#1092#1072#1081#1083#1099'|*.*'
     Left = 784
     Top = 512
+  end
+  object sSkinManager1: TsSkinManager
+    ButtonsOptions.OldGlyphsMode = True
+    IsDefault = False
+    InternalSkins = <>
+    SkinDirectory = 
+      'C:\Program Files (x86)\Borland\Delphi7\Source\AlphaControls\Skin' +
+      's'
+    SkinInfo = 'N/A'
+    ThirdParty.ThirdEdits = ' '
+    ThirdParty.ThirdButtons = 'TButton'
+    ThirdParty.ThirdBitBtns = ' '
+    ThirdParty.ThirdCheckBoxes = ' '
+    ThirdParty.ThirdGroupBoxes = ' '
+    ThirdParty.ThirdListViews = ' '
+    ThirdParty.ThirdPanels = ' '
+    ThirdParty.ThirdGrids = ' '
+    ThirdParty.ThirdTreeViews = ' '
+    ThirdParty.ThirdComboBoxes = ' '
+    ThirdParty.ThirdWWEdits = ' '
+    ThirdParty.ThirdVirtualTrees = ' '
+    ThirdParty.ThirdGridEh = ' '
+    ThirdParty.ThirdPageControl = ' '
+    ThirdParty.ThirdTabControl = ' '
+    ThirdParty.ThirdToolBar = ' '
+    ThirdParty.ThirdStatusBar = ' '
+    ThirdParty.ThirdSpeedButton = ' '
+    ThirdParty.ThirdScrollControl = ' '
+    ThirdParty.ThirdUpDown = ' '
+    ThirdParty.ThirdScrollBar = ' '
+    ThirdParty.ThirdStaticText = ' '
+    ThirdParty.ThirdNativePaint = ' '
+    Left = 612
+    Top = 73
   end
 end

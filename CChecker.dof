@@ -94,8 +94,8 @@ OutputDir=
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
-SearchPath=C:\Program Files\Borland\Delphi7\Source\SynEdit\Source
-Packages=vcl;dclOfficeXP;vcldb;rtl;vclx;indy;inet;xmlrtl;vclie;inetdbbde;inetdbxpress;dbrtl;dsnap;dsnapcon;soaprtl;VclSmp;dbexpress;dbxcds;inetdb;bdertl;vcldbx;webdsnap;websnap;adortl;ibxpress;teeui;teedb;tee;dss;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;SynEdit_R7
+SearchPath=C:\Program Files (x86)\Borland\Delphi7\Source\SynEdit\Source;C:\Program Files (x86)\Borland\Delphi7\Source\AlphaControls\D7
+Packages=vcl;dclOfficeXP;vcldb;rtl;vclx;indy;inet;xmlrtl;vclie;inetdbbde;inetdbxpress;dbrtl;dsnap;dsnapcon;soaprtl;VclSmp;dbexpress;dbxcds;inetdb;bdertl;vcldbx;webdsnap;websnap;adortl;ibxpress;teeui;teedb;tee;dss;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;SynEdit_R7;acntD7_R
 Conditionals=
 DebugSourceDirs=
 UsePackages=0
@@ -139,4 +139,4 @@ Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlSearchPath]
 Count=1
-Item0=C:\Program Files\Borland\Delphi7\Source\SynEdit\Source
+Item0=C:\Program Files (x86)\Borland\Delphi7\Source\SynEdit\Source;C:\Program Files (x86)\Borland\Delphi7\Source\AlphaControls\D7

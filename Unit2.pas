@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, SynEdit, SynMemo, XPMan, Menus,
-  SynEditHighlighter, SynHighlighterCpp;
+  SynEditHighlighter, SynHighlighterCpp, sSkinManager;
 
 type
   TForm2 = class(TForm)
@@ -29,6 +29,7 @@ type
     OpenDialog1: TOpenDialog;
     Timer1: TTimer;
     SaveDialog1: TSaveDialog;
+    sSkinManager1: TsSkinManager;
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure N2Click(Sender: TObject);

@@ -4,7 +4,8 @@ uses
   ShareMem,
   Forms,
   Unit1 in 'Unit1.pas' {Form1},
-  Unit2 in 'Unit2.pas' {Form2};
+  Unit2 in 'Unit2.pas' {Form2},
+  AnimateEasing in 'AnimateEasing.pas';
 
 var
   Key: TWordTriple;

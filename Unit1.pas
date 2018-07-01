@@ -4,39 +4,40 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, jpeg, ExtCtrls, StdCtrls, Mask, XPMan, Grids, ValEdit, ComCtrls,
-  Buttons, sSkinManager;
+  Dialogs, ExtCtrls, StdCtrls, Grids, ComCtrls,
+  Buttons, sSkinManager, sLabel, sMaskEdit, sEdit, sListBox, sButton, Mask,
+  sDialogs, sCalculator, sSpeedButton, sColorSelect;
 
 type
   TWordTriple = Array[0..2] of Word;
+  TEaseTypes = (
+    easeLinear,
+    easeInBack,
+    easeOutBack
+  );
   TForm1 = class(TForm)
-    Edit1: TEdit;
-    Label2: TLabel;
-    Label3: TLabel;
-    Button1: TButton;
-    Button2: TButton;
-    Edit2: TEdit;
-    XPManifest1: TXPManifest;
-    Button3: TButton;
-    Button4: TButton;
-    ListBox1: TListBox;
-    Label4: TLabel;
-    Button5: TButton;
-    Label5: TLabel;
     Timer1: TTimer;
-    Image1: TImage;
-    Shape1: TShape;
-    Label1: TLabel;
-    Label6: TLabel;
     sSkinManager1: TsSkinManager;
-    procedure Button4Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    sLabelFX1: TsLabelFX;
+    sLabelFX2: TsLabelFX;
+    sLabelFX3: TsLabelFX;
+    sLabel1: TsLabel;
+    sEdit1: TsEdit;
+    sMaskEdit1: TsMaskEdit;
+    sListBox1: TsListBox;
+    sButton1: TsButton;
+    sButton2: TsButton;
+    sButton3: TsButton;
+    sButton4: TsButton;
+    Timer2: TTimer;
+    procedure sButton1Click(Sender: TObject);
+    procedure sButton2Click(Sender: TObject);
+    procedure sButton3Click(Sender: TObject);
+    procedure sButton4Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Timer1Timer(Sender: TObject);
+    procedure Timer2Timer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,90 +93,146 @@ begin
   end;
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TForm1.sButton1Click(Sender: TObject);
 begin
- Close;
-end;
-
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  if (Edit1.Text <> '') and (Edit2.Text <> '') then begin
-    Button1.Enabled := false;
-    Button2.Enabled := false;
-    Button3.Enabled := true;
-    Button5.Enabled := true;
+  if (sEdit1.Text <> '') and (sMaskEdit1.Text <> '') then begin
+    sButton1.Enabled := false;
+    sButton2.Enabled := false;
+    sButton4.Enabled := true;
+    sButton3.Enabled := true;
     createEmptyFile('C:\CCchecker\Users.dat');
-    ListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
-    ListBox1.Items.Add(Edit1.Text);
-    ListBox1.Items.SaveToFile('C:\CCchecker\Users.dat');
-    Label5.Caption := 'Вы вошли как: '+Edit1.Text;
-    Edit1.Enabled := false;
-    Edit2.Enabled := false;
+    sListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
+    sListBox1.Items.Add(sEdit1.Text);
+    sListBox1.Items.SaveToFile('C:\CCchecker\Users.dat');
+    sLabel1.Caption := 'Вы вошли как: '+sEdit1.Text;
+    sEdit1.Enabled := false;
+    sMaskEdit1.Enabled := false;
   end;
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.sButton2Click(Sender: TObject);
 begin
-  if (Edit1.Text <> '') and (Edit2.Text <> '') then begin
-    Button1.Enabled := false;
-    Button2.Enabled := false;
-    Button3.Enabled := true;
-    Button5.Enabled := true;
+  if (sEdit1.Text <> '') and (sMaskEdit1.Text <> '') then begin
+    sButton1.Enabled := false;
+    sButton2.Enabled := false;
+    sButton4.Enabled := true;
+    sButton3.Enabled := true;
     createEmptyFile('C:\CCchecker\Users.dat');
-    ListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
-    ListBox1.Items.Add(Edit1.Text);
-    ListBox1.Items.SaveToFile('C:\CCchecker\Users.dat');
-    Label5.Caption := 'Вы вошли как: '+Edit1.Text;
-    Edit1.Enabled := false;
-    Edit2.Enabled := false;
+    sListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
+    sListBox1.Items.Add(sEdit1.Text);
+    sListBox1.Items.SaveToFile('C:\CCchecker\Users.dat');
+    sLabel1.Caption := 'Вы вошли как: '+sEdit1.Text;
+    sEdit1.Enabled := false;
+    sMaskEdit1.Enabled := false;
   end;
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TForm1.sButton3Click(Sender: TObject);
 begin
-    Button1.Enabled := true;
-    Button2.Enabled := true;
-    Button3.Enabled := false;
-    Button5.Enabled := false;
-    Label5.Caption := 'Вы не вошли в аккаунт';
-    updateUsersFile(Edit1.Text);
-    Edit1.Text := '';
-    Edit2.Text := '';
-    Edit1.Enabled := true;
-    Edit2.Enabled := true;
-    ListBox1.Clear;
+  sButton1.Enabled := true;
+  sButton2.Enabled := true;
+  sButton4.Enabled := false;
+  sButton3.Enabled := false;
+  sLabel1.Caption := 'Вы не вошли в аккаунт.';
+  updateUsersFile(sEdit1.Text);
+  sEdit1.Text := '';
+  sMaskEdit1.Text := '';
+  sEdit1.Enabled := true;
+  sMaskEdit1.Enabled := true;
+  sListBox1.Clear;
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TForm1.sButton4Click(Sender: TObject);
 begin
-  if (ListBox1.ItemIndex >= 0) then begin
-    if (ListBox1.Items[ListBox1.ItemIndex] <> Edit1.Text) then begin
-      Form2.Caption := 'Чат - '+ListBox1.Items[ListBox1.ItemIndex];
+  if (sListBox1.ItemIndex >= 0) then begin
+    if (sListBox1.Items[sListBox1.ItemIndex] <> sEdit1.Text) then begin
+      Form2.Caption := 'Чат - '+sListBox1.Items[sListBox1.ItemIndex];
       Form2.Show;
       Timer1.Enabled := false;
-      createEmptyFile('C:\CCchecker\'+ListBox1.Items[ListBox1.ItemIndex]+'_sended.dat');
+      createEmptyFile('C:\CCchecker\'+sListBox1.Items[sListBox1.ItemIndex]+'_sended.dat');
     end
     else
       MessageDlg('Вы не можете общаться с самим собой!', mtWarning, [mbOk], 0);
   end;
 end;
 
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  updateUsersFile(sEdit1.Text);
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  if sMaskEdit1.Enabled = false then
+  sListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
+end;
+
+// Easing
+
+function easingFunctions(t, a, b, easingType: Real): Real;
+  var additionalVar, FirstResult: Real;
+begin
+  additionalVar := t - (2.625 / 2.75);
+  if (easingType = 0) then // EaseOut
+    Result := a + (b - a) * (t * (2 - t));
+  if (easingType = 1) then // EaseIn
+    Result := a + (b - a) * t * t;
+  if (easingType = 2) then // EaseOutBack
+  begin
+    t := t / 1;
+    Result := a + (b - a) * (1 * ((t - 1) * t * ((1.70158 + 1) * t + 1.70158) + 1));
+  end;
+  if (easingType = 3) then // EaseInBack
+    Result := a + (b - a) * (1 * t * t * ((1.70158 + 1) * t - 1.70158));
+  if (easingType = 4) then // EaseOutBounce
+  begin
+    FirstResult := (7.5625 * (additionalVar) * t + 0.984375);
+    if (t < (1 / 2.75)) then
+      FirstResult := (7.5625 * t * t);
+    if (t < (2 / 2.75)) then
+    begin
+      additionalVar := t - (1.5 / 2.75);
+      FirstResult := (7.5625 * (additionalVar) * t + 0.75);
+    end;
+    if (t < (2.5 / 2.75)) then
+    begin
+      additionalVar := t - (2.25 / 2.75);
+      FirstResult := (7.5625 * (additionalVar) * t + 0.9375);
+    end;
+    Result := a + (b - a) * FirstResult;
+  end;
+  if (easingType = 5) then // Linear
+    Result := a + (b - a) * t;
+end;
+
+var
+  EasingTime: Real;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   if not DirectoryExists('C:\CChecker') then
     CreateDir('C:\CCchecker');
   Timer1.Enabled := true;
+  Timer2.Enabled := true;
+  EasingTime := 0;
 end;
 
-procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TForm1.Timer2Timer(Sender: TObject);
 begin
-  updateUsersFile(Edit1.Text);
-end;
-
-procedure TForm1.Timer1Timer(Sender: TObject);
-begin
-  if Edit2.Enabled = false then
-  ListBox1.Items.LoadFromFile('C:\CCchecker\Users.dat');
+  EasingTime := EasingTime + Timer2.Interval / 1000;
+  sButton1.Top := Round(easingFunctions(EasingTime, 150, 160, 0));
+  sButton2.Top := Round(easingFunctions(EasingTime, 150, 160, 0));
+  sButton3.Top := Round(easingFunctions(EasingTime, 150, 160, 0));
+  sButton4.Top := Round(easingFunctions(EasingTime, 210, 200, 0));
+  sEdit1.Top := Round(easingFunctions(EasingTime, 40, 48, 0));
+  sListBox1.Top := Round(easingFunctions(EasingTime, 40, 48, 0));
+  sMaskEdit1.Top := Round(easingFunctions(EasingTime, 120, 128, 0));
+  sLabelFX1.Top := Round(easingFunctions(EasingTime, -8, 0, 0));
+  sLabelFX2.Top := Round(easingFunctions(EasingTime, 72, 80, 0));
+  sLabelFX3.Top := Round(easingFunctions(EasingTime, 0, 8, 0));
+  sLabel1.Top := Round(easingFunctions(EasingTime, 248, 240, 0));
+  if (EasingTime >= 1) then
+    Timer2.Enabled := false;
 end;
 
 end.

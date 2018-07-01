@@ -76,8 +76,8 @@ end;
 
 procedure TForm2.FormShow(Sender: TObject);
 begin
-  userName := Form1.Edit1.Text;
-  opponentName := Form1.ListBox1.Items[Form1.ListBox1.ItemIndex];
+  userName := Form1.sEdit1.Text;
+  opponentName := Form1.sListBox1.Items[Form1.sListBox1.ItemIndex];
   SynMemo1.Clear;
   SynMemo2.Clear;
   Memo1.Clear;
